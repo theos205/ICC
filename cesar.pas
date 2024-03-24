@@ -1,7 +1,7 @@
 program cesar;
 uses crt;
 type vetor = array[1 .. 26] of char;
-var frase, aux : string;
+var frase, aux, a : string;
 	l, chave, opcao: longint;
 	alfabeto : vetor;
 
@@ -93,56 +93,64 @@ begin
 	chave := 8;
 	for l := 1 to 26 do	
 		alfabeto[l] := char(l+96);
-	writeln('Frase proposta na aula (chave = 8):', frase);
+	writeln('Frase proposta na aula (chave = 8):  ', frase);
 	aux := decode_cesar(frase, chave);
-	writeln('Frase descriptografada: ', aux);
-	writeln('Frase recriptografada: ', encode_cesar(aux, chave));
+	writeln('Frase descriptografada:              ', aux);
+	writeln('Frase recriptografada:               ', encode_cesar(aux, chave));
 	aux := encode_cesar2(aux, chave);
-	writeln('Frase recriptografada: ', aux);
-	writeln('Frase redescriptografada: ', decode_cesar2(aux, chave));
+	writeln('Frase criptografada com meu método:  ', aux);
+	writeln('Frase descriptograda:                ', decode_cesar2(aux, chave));
 
 	writeln;
-	writeln;
-	opcao := 10;
-	frase := 'frase inicial';
-	chave := 10;
-	aux := frase;
-	writeln;
-	while opcao <> 0 do
+	write('Deseja entrar no modo de manipulação (Y, n)? ');
+	read(a);
+	if (a = '') or (a = 'y') or (a = 'Y') then
 	begin
-		clrscr;
-		writeln('Escolha entre as opcoes:');
-		writeln('0 -> Sair do programa');
-		writeln('1 -> Ler frase');
-		writeln('2 -> Ler chave');
-		writeln('3 -> Criptografar frase atual com cifra normal');
-		writeln('4 -> Descriptografar frase atual com cifra normal');
-		writeln('5 -> Criptografar frase atual com cifra melhorada');
-		writeln('6 -> Descriptografar frase atual com cifra melhorada');
-
 		writeln;
-		writeln('frase atual: ', frase);
-		writeln('chave atual: ', chave);
-		writeln('mensagem:    ', aux);
+		opcao := 10;
+		frase := 'frase inicial';
+		chave := 10;
+		aux := frase;
 		writeln;
+		while opcao <> 0 do
+		begin
+			clrscr;
+			writeln('Escolha entre as opcoes:');
+			writeln('0 -> Sair do programa');
+			writeln('1 -> Ler frase');
+			writeln('2 -> Ler chave');
+			writeln('3 -> Criptografar frase atual com cifra normal');
+			writeln('4 -> Descriptografar frase atual com cifra normal');
+			writeln('5 -> Criptografar frase atual com cifra melhorada');
+			writeln('6 -> Descriptografar frase atual com cifra melhorada');
 
-		write('Entre com a opcao: ');
-		readln(opcao);
-
-		case opcao of 	
-			1: 	begin
-					write('Entre com a nova frase: ');
-					readln(frase);
-				end;
-			2:	begin
-					write('Entre com a nova chave(1-26):  ');
-					readln(chave);
-					chave := abs(chave);
-				end;
-			3:	aux := encode_cesar(frase, chave);
-			4:	aux := decode_cesar(aux, chave);
-			5:	aux := encode_cesar2(frase, chave);
-			6:	aux := decode_cesar2(aux, chave);
+			writeln;
+			writeln('frase atual: ', frase);
+			writeln('chave atual: ', chave);
+			writeln('mensagem:    ', aux);
+			writeln;
+	
+			write('Entre com a opcao: ');
+			readln(opcao);
+	
+			case opcao of 	
+				1: 	begin
+						write('Entre com a nova frase: ');
+						readln(frase);
+					end;
+				2:	begin
+						writeln('Aceita apenas numeros entre 1-26, caso entrada esteja fora desse intervalo,'); 
+						writeln('a nova chave terá o valor entrado mod 26');
+						write('Entre com a nova chave:  ');
+						readln(chave);
+						chave := abs(chave);
+						chave := chave mod 26;
+					end;
+				3:	aux := encode_cesar(frase, chave);
+				4:	aux := decode_cesar(aux, chave);
+				5:	aux := encode_cesar2(frase, chave);
+				6:	aux := decode_cesar2(aux, chave);
+			end;
 		end;
 	end;
 end.

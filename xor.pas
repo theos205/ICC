@@ -48,6 +48,6 @@ begin
 
 	volta := decode_xor(frasec, senha);
 	writeln('frase descriptografada:     ', volta);
-	writeln('frase criptografada em ascii: ', frasec, ' ---> nao mostra caracteres nao imprimiveis');
+	writeln('frase criptografada em ascii: ', frasec, ' ---> nao mostra caracteres nao imprimiveis, como o LF (line feed) que muda de linha');
 
 end.
